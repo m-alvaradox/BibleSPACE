@@ -12,7 +12,5 @@ public class Album {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fotos = fotos;
-    }
-    
-    
+    } 
 }

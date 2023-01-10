@@ -1,5 +1,5 @@
 
-package espol.poo.biblespace;
+package espol.poo.objetos;
 
 import java.util.ArrayList;
 

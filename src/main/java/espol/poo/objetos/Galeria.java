@@ -1,5 +1,6 @@
 
-package espol.poo.biblespace;
+package espol.poo.objetos;
+import espol.poo.objetos.Album;
 import java.util.ArrayList;
 
 public abstract class Galeria {

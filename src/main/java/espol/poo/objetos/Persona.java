@@ -1,5 +1,5 @@
 
-package espol.poo.biblespace;
+package espol.poo.objetos;
 
 public class Persona {
     private String nombre;

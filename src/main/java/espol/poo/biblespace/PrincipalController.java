@@ -23,12 +23,16 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 /**
  * FXML Controller class
@@ -50,15 +54,18 @@ public class PrincipalController implements Initializable {
         for(Album al : albumes) {
             VBox cont = new VBox(3);
             Label lblnom = new Label(al.getNombre());
+            Tooltip t = new Tooltip(al.getDescripcion());
+            t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
             
             ImageView imgalb = new ImageView();
             try {
-            Image image = new Image("espol/poo/images/Albumdefault.png",100,100,false,false);
+            Image image = new Image(App.fileimages +"Albumdefault.png",100,100,false,false);
             imgalb.setImage(image);
             } catch(Exception ex) {
                 System.out.println("No se encuentra el archivo");
             }
-            
+            //lblnom.setTooltip(t);
+            Tooltip.install(imgalb, t);
             cont.getChildren().addAll(imgalb,lblnom);
             pcontenido.getChildren().add(cont);
         }
@@ -107,6 +114,7 @@ public class PrincipalController implements Initializable {
              Album al = new Album(tit.getText(),des.getText(),null);
              albumes.add(al);
              System.out.println("Se agregó un nuevo album: "+al.getNombre());
+             System.out.println("Descripcion: "+al.getDescripcion());
              
              try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
                  out.writeObject(albumes);

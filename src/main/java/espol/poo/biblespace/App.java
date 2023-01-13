@@ -15,6 +15,7 @@ public class App extends Application {
 
     private static Scene scene;
     public static String archgaleria = "galeria.ser";
+    public static String fileimages = "espol/poo/images/";
 
     @Override
     public void start(Stage stage) throws IOException {

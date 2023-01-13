@@ -3,9 +3,10 @@ package espol.poo.objetos;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Album {
+public class Album implements Serializable {
     private String nombre;
     private String descripcion;
     private ArrayList<Fotografia> fotos;
@@ -23,7 +24,7 @@ public class Album {
             albumes = (ArrayList<Album>) oit.readObject();
         }
         catch(Exception e) {
-            e.printStackTrace();
+            System.out.println("Galeria vacia");
         }
         // por hacer
         return albumes;

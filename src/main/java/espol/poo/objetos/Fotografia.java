@@ -2,9 +2,10 @@
 package espol.poo.objetos;
 
 import espol.poo.objetos.Album;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Fotografia {
+public class Fotografia implements Serializable {
     private String descripcion;
     private String fecha;
     private String lugar;

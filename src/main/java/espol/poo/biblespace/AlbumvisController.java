@@ -6,10 +6,13 @@ package espol.poo.biblespace;
 
 import espol.poo.objetos.Album;
 import espol.poo.objetos.Foto;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
@@ -22,7 +25,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
@@ -37,6 +42,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 /**
@@ -61,8 +68,8 @@ public class AlbumvisController implements Initializable {
     private Text nomalbum;
     
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
-    private int indice;
-    private ArrayList<Foto> fotos = new ArrayList<>();
+    private int indice = recogerIndice();
+    private ArrayList<Foto> fotos = Foto.cargarFotografias(albumes.get(indice));
     /**
      * Initializes the controller class.
      */
@@ -135,9 +142,10 @@ public class AlbumvisController implements Initializable {
               } catch (IOException ex) {
                     System.out.println("Error en la copia del archivo");
               }             
-         
+              
              Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date.getText(),null,null);
              fotos.add(ft);
+             
              albumes.get(indice).setFotos(fotos);
              
              try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
@@ -148,6 +156,7 @@ public class AlbumvisController implements Initializable {
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Resultado de la operacion");
                 alert.setContentText("Foto agregada correctamente");
+                System.out.println(imgFile.getName() + " agregada correctamente");
                 dialog.close();
                 alert.showAndWait();
                 }
@@ -185,11 +194,22 @@ public class AlbumvisController implements Initializable {
         nomalbum.setText(album.getNombre());
     }
     
-    public void recogerIndice(int indice) {
-        this.indice = indice;
+    public int recogerIndice() {
+        int numindice = 0;
+        try {
+            FileReader lector = new FileReader ("indicealbum.txt");
+            BufferedReader BR = new BufferedReader(lector);
+            numindice = Integer.parseInt(BR.readLine());
+        }
+        catch (Exception ex) { ex.printStackTrace(); }
+        
+        return numindice;
+                        
     }
     
     public void llenarImagenes(Album album) {
+        pcontenido.getChildren().clear();
+       
         try {
             if(album.getFotos() == null) {
                 pcontenido.getChildren().add(new Label("<Vacio>"));
@@ -197,15 +217,23 @@ public class AlbumvisController implements Initializable {
             
         for(Foto ft : album.getFotos()) {
             VBox cont = new VBox(1);
+            //System.out.println(ft.getUrl());
+            Tooltip t = new Tooltip("Descripcion: "+ft.getDescripcion()+"\nLugar: "+ft.getLugar()
+                    +"\nTomada el: "+ft.getFecha()+"\nAparece: "+ft.getPersonas());
+            t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
             
             ImageView imageView = new ImageView();
             try {
                 FileInputStream input = new FileInputStream(ft.getUrl());
                 Image image = new Image(input);
                 imageView.setImage(image);
+                imageView.setFitWidth(0.10*image.getWidth());
+                imageView.setFitHeight(0.10*image.getHeight());
+                
             } catch(IOException ex) {
                 System.out.println("No se encuentra el archivo");
             }
+            Tooltip.install(imageView, t);
             
             cont.getChildren().addAll(imageView);
             pcontenido.getChildren().add(cont);

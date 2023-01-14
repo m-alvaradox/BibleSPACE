@@ -7,6 +7,7 @@ package espol.poo.biblespace;
 import espol.poo.objetos.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
@@ -58,7 +59,7 @@ public class PrincipalController implements Initializable {
         bttnadd.setTooltip(tbuttonadd);
         
         for(Album al : albumes) {
-            VBox cont = new VBox(3);
+            VBox cont = new VBox(2);
             Label lblnom = new Label(al.getNombre());
             Tooltip t = new Tooltip(al.getDescripcion());
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
@@ -82,9 +83,7 @@ public class PrincipalController implements Initializable {
                 AlbumvisController avc = fxmlLoader.getController();
                 avc.llenarTitulo(al);
                 int indice = albumes.indexOf(al);
-                avc.recogerIndice(indice);
-                
-                
+                enviarIndice(indice);
                 
                 App.changeRoot(root);
                 } catch(IOException ex) {System.out.println("Error"); }
@@ -144,5 +143,14 @@ public class PrincipalController implements Initializable {
          gridPane.add(cr, 6, 3);
          dialog.getDialogPane().setContent(gridPane);
          dialog.show();     
-    }  
+    }
+
+    public void enviarIndice(int indice) {
+        try {
+            FileWriter fichero = new FileWriter("indicealbum.txt");
+            fichero.write(Integer.toString(indice));
+            fichero.close();
+        }
+        catch (Exception ex) { System.out.println("No se encuentra el archivo"); }
+    }
 }

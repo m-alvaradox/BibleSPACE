@@ -2,6 +2,8 @@
 package espol.poo.objetos;
 
 import espol.poo.objetos.Album;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -67,6 +69,20 @@ public class Foto implements Serializable {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+    
+    public static ArrayList<Foto> cargarFotografias(Album alx) {
+        ArrayList<Foto> ft = new ArrayList<>();
+        
+        try {
+            for(Foto ft1 : alx.getFotos()) {
+                ft.add(ft1);
+            }
+        }
+        catch(Exception e) {
+            System.out.println(" ");
+        }
+        return ft;
     }
     
     

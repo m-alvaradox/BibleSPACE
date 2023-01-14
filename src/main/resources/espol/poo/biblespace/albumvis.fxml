@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="443.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.biblespace.AlbumvisController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="nomalbum" layoutX="31.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Sans Serif Collection" size="20.0" />
+         </font>
+      </Text>
+      <FlowPane fx:id="pcontenido" layoutX="28.0" layoutY="136.0" prefHeight="290.0" prefWidth="511.0" />
+      <Button fx:id="bttnupload" contentDisplay="GRAPHIC_ONLY" layoutX="503.0" layoutY="24.0" mnemonicParsing="false" onAction="#btncargar" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/uploadbutton.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bttnback" layoutX="295.0" layoutY="24.0" mnemonicParsing="false" onAction="#regresar" prefHeight="31.0" prefWidth="108.0" stylesheets="@../css/estilos.css" text="&lt; Mis álbumes">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bttnslide" contentDisplay="GRAPHIC_ONLY" layoutX="456.0" layoutY="24.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/slideshowbutton.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bttnmove" contentDisplay="GRAPHIC_ONLY" layoutX="413.0" layoutY="24.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/uploadbutton.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

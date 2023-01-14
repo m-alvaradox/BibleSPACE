@@ -15,8 +15,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -51,6 +54,9 @@ public class PrincipalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        Tooltip tbuttonadd = new Tooltip("Crear un álbum nuevo");
+        bttnadd.setTooltip(tbuttonadd);
+        
         for(Album al : albumes) {
             VBox cont = new VBox(3);
             Label lblnom = new Label(al.getNombre());
@@ -65,9 +71,25 @@ public class PrincipalController implements Initializable {
                 System.out.println("No se encuentra el archivo");
             }
             //lblnom.setTooltip(t);
+            imgalb.setCursor(Cursor.HAND);
             Tooltip.install(imgalb, t);
+            
+            imgalb.setOnMouseClicked(ev -> 
+            { //AlbumvisController.albumseleccionado(al);
+                try {
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("albumvis.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                AlbumvisController avc = fxmlLoader.getController();
+                avc.llenarTitulo(al);
+                
+                App.changeRoot(root);
+                } catch(IOException ex) {System.out.println("Error"); }
+            
+            }); 
+            
             cont.getChildren().addAll(imgalb,lblnom);
             pcontenido.getChildren().add(cont);
+            
         }
         
         

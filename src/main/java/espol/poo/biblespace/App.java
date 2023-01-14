@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.layout.VBox;
 
 /**
  * JavaFX App
@@ -16,6 +17,8 @@ public class App extends Application {
     private static Scene scene;
     public static String archgaleria = "galeria.ser";
     public static String fileimages = "espol/poo/images/";
+
+    //metodo para cambiar el contenido de la escena
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,6 +39,10 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    
+    public static void changeRoot(Parent rootNode) {
+        scene.setRoot(rootNode);
     }
 
 }

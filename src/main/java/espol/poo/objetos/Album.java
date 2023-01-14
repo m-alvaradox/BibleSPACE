@@ -54,5 +54,6 @@ public class Album implements Serializable {
         this.fotos = fotos;
     }
     
-    
+       
+      
 }

@@ -202,7 +202,6 @@ public class AlbumvisController implements Initializable {
                 Image image = new Image(ft.getUrl(),100,100,false,false);
                 imgalb.setImage(image);
             } catch(Exception ex) {
-                System.out.println(ex);
                 System.out.println("No se encuentra el archivo");
             }
             

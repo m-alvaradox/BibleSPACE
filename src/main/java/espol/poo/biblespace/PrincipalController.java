@@ -5,11 +5,9 @@
 package espol.poo.biblespace;
 
 import espol.poo.objetos.*;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -32,12 +29,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.FileChooser;
 /**
  * FXML Controller class
  *
@@ -51,6 +45,7 @@ public class PrincipalController implements Initializable {
     private FlowPane pcontenido;
     
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
+    public static int indice;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,7 +54,7 @@ public class PrincipalController implements Initializable {
         bttnadd.setTooltip(tbuttonadd);
         
         for(Album al : albumes) {
-            VBox cont = new VBox(2);
+            VBox cont = new VBox(1);
             Label lblnom = new Label(al.getNombre());
             Tooltip t = new Tooltip(al.getDescripcion());
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
@@ -75,27 +70,35 @@ public class PrincipalController implements Initializable {
             imgalb.setCursor(Cursor.HAND);
             Tooltip.install(imgalb, t);
             
-            imgalb.setOnMouseClicked(ev -> 
+            imgalb.setOnMouseClicked(event -> 
             { //AlbumvisController.albumseleccionado(al);
                 try {
+                PrincipalController.indice = albumes.indexOf(al);
                 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("albumvis.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 AlbumvisController avc = fxmlLoader.getController();
                 avc.llenarTitulo(al);
-                int indice = albumes.indexOf(al);
-                enviarIndice(indice);
+                
+                
+                
+                //para dormir
+//                Thread mith = Thread.currentThread();
+//                try {
+//                    mith.sleep(4000);  // en milisegundos
+//                    } catch(InterruptedException ie) {
+//                        System.err.println("Capturada InterruptedException: "+ie);
+//                    }
                 
                 App.changeRoot(root);
+                
                 } catch(IOException ex) {System.out.println("Error"); }
             
             }); 
             
             cont.getChildren().addAll(imgalb,lblnom);
             pcontenido.getChildren().add(cont);
-            
+              
         }
-        
-        
     }
 
     @FXML

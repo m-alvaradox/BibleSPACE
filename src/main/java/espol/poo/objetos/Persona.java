@@ -1,8 +1,6 @@
 
 package espol.poo.objetos;
 
-import java.io.Serializable;
-
 public class Persona {
     private String nombre;
     private String apellido;

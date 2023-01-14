@@ -1,9 +1,6 @@
 
 package espol.poo.objetos;
 
-import espol.poo.objetos.Album;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 

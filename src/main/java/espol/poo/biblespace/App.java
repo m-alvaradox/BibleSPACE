@@ -17,6 +17,7 @@ public class App extends Application {
     private static Scene scene;
     public static String archgaleria = "galeria.ser";
     public static String fileimages = "espol/poo/images/";
+    public static String filefotos = "espol/poo/images/fotos/";
 
     //metodo para cambiar el contenido de la escena
 

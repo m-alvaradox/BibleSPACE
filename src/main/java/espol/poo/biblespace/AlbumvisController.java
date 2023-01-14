@@ -5,9 +5,16 @@
 package espol.poo.biblespace;
 
 import espol.poo.objetos.Album;
+import espol.poo.objetos.Foto;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -48,6 +55,9 @@ public class AlbumvisController implements Initializable {
     @FXML
     private Text nomalbum;
     
+    private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
+    private int indice;
+    private ArrayList<Foto> fotos = new ArrayList<>();
     /**
      * Initializes the controller class.
      */
@@ -66,7 +76,8 @@ public class AlbumvisController implements Initializable {
         
         // Obtener la imagen seleccionada
         File imgFile = buscarArchivo();
-   
+        
+        // Mostrar la imagen
         if(imgFile != null) {
           Image image = new Image("file:" + imgFile.getAbsolutePath());
           System.out.println("Foto seleccionada: "+ imgFile.getName());
@@ -76,7 +87,7 @@ public class AlbumvisController implements Initializable {
           prev.setFitHeight(0.10*image.getHeight());
           
           Dialog dialog = new Dialog();
-          dialog.setTitle("Nuevo Álbum");
+          dialog.setTitle("Cargar Foto");
           dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
           
           GridPane gridPane = new GridPane();
@@ -84,11 +95,13 @@ public class AlbumvisController implements Initializable {
           gridPane.add(prev, 0, 1);
           gridPane.add(new Label("Nombre: "+imgFile.getName()), 0, 5);
           gridPane.add(new Label(""),0,6);
-          gridPane.add(new Label("Ingresa una descripción corta para esta imagen "), 0, 7);
-          gridPane.add(new Label("Ingrese lugar: "), 0, 8);
-          gridPane.add(new Label("Ingrese fecha: "), 0, 9); //calendar
-          gridPane.add(new Label("¿Quienes aparecen en la foto?: "), 0, 10); //checkedbox
-          gridPane.add(new Label("Guardar imagen en: "), 0, 11);
+          gridPane.add(new Label("Su imagen se guardara en: "+albumes.get(indice).getNombre()), 0, 7);
+          gridPane.add(new Label(""),0,8);
+          gridPane.add(new Label("Ingresa una descripción corta para esta imagen "), 0, 9);
+          gridPane.add(new Label("Ingrese lugar: "), 0, 10);
+          gridPane.add(new Label("Ingrese fecha: "), 0, 11); //calendar
+          gridPane.add(new Label("¿Quienes aparecen en la foto?: "), 0, 12); //checkedbox
+          
           
          TextField des = new TextField();
          TextField place = new TextField();
@@ -97,27 +110,33 @@ public class AlbumvisController implements Initializable {
          TextField people = new TextField();
          people.setPromptText("Marcos,Juana");
          
-         ComboBox cmbAlbum = new ComboBox();
-         ArrayList<String> albums = new ArrayList<>();
-         for(Album al : Album.cargarAlbumes(App.archgaleria)) {
-             albums.add(al.getNombre());
-         }
-         cmbAlbum.getItems().setAll(albums);
-         
-         gridPane.add(des,1,7);
-         gridPane.add(place,1,8);
-         gridPane.add(date,1,9);
-         gridPane.add(people,1,10);
-         gridPane.add(cmbAlbum, 1, 11);
+         gridPane.add(des,1,9);
+         gridPane.add(place,1,10);
+         gridPane.add(date,1,11);
+         gridPane.add(people,1,12);
          
          Button cr = new Button("Cargar");
-         gridPane.add(new Label(""),0,12);
-         gridPane.add(cr, 0, 13);
-          
-          
-          
-          dialog.getDialogPane().setContent(gridPane);
-          dialog.show(); }
+         gridPane.add(new Label(""),0,13);
+         gridPane.add(cr, 0, 14);
+         
+         cr.setOnMouseClicked(evento1 -> {
+             //copiar la imagen
+             Path from = Paths.get(imgFile.toURI());
+             Path to = Paths.get(imgFile.getName());
+              try {
+                  Files.copy(from, to,StandardCopyOption.REPLACE_EXISTING);
+              } catch (IOException ex) {
+                    System.out.println("Error en la copia del archivo");
+              }             
+             
+             Foto ft = new Foto(des.getText(),place.getText(),date.getText(),null,null);
+             fotos.add(ft);
+             albumes.get(indice).setFotos(fotos);
+             
+         });
+         
+         dialog.getDialogPane().setContent(gridPane);
+         dialog.show(); }
     }
     
     public File buscarArchivo() throws IOException {
@@ -143,6 +162,10 @@ public class AlbumvisController implements Initializable {
     
     public void llenarTitulo(Album album) {
         nomalbum.setText(album.getNombre());
+    }
+    
+    public void recogerIndice(int indice) {
+        this.indice = indice;
     }
     
     public void llenarImagenes(Album album) {

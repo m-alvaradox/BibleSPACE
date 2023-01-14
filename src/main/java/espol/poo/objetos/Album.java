@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class Album implements Serializable {
     private String nombre;
     private String descripcion;
-    private ArrayList<Fotografia> fotos;
+    private ArrayList<Foto> fotos;
     
-    public Album(String nombre, String descripcion, ArrayList<Fotografia> fotos) {
+    public Album(String nombre, String descripcion, ArrayList<Foto> fotos) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fotos = fotos;
@@ -46,11 +46,11 @@ public class Album implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Fotografia> getFotos() {
+    public ArrayList<Foto> getFotos() {
         return fotos;
     }
 
-    public void setFotos(ArrayList<Fotografia> fotos) {
+    public void setFotos(ArrayList<Foto> fotos) {
         this.fotos = fotos;
     }
     

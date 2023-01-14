@@ -81,6 +81,10 @@ public class PrincipalController implements Initializable {
                 Parent root = (Parent) fxmlLoader.load();
                 AlbumvisController avc = fxmlLoader.getController();
                 avc.llenarTitulo(al);
+                int indice = albumes.indexOf(al);
+                avc.recogerIndice(indice);
+                
+                
                 
                 App.changeRoot(root);
                 } catch(IOException ex) {System.out.println("Error"); }

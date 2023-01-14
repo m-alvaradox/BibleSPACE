@@ -101,42 +101,25 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private void btncargar(ActionEvent event) {
-//        Alert mensaje = new Alert(Alert.AlertType.CONFIRMATION);
-//        mensaje.setTitle("Añadir ");
-//        mensaje.setContentText("Este es un mensaje");
-//        mensaje.showAndWait();
-
-//        FileChooser fc = new FileChooser();
-//        File archivo = fc.showOpenDialog(null);
-//        System.out.println(archivo);
 
           Dialog dialog = new Dialog();
           dialog.setTitle("Nuevo Álbum");
           dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
           
-       
-          dialog.getDialogPane().setContent(crearalbum());
-          dialog.show();
-          
-    }
-    
-    private Node crearalbum() { // Para que sirve node?
+          GridPane gridPane = new GridPane();
+          gridPane.add(new Label("Ingresa un nombre para este álbum"), 0, 0);
+          gridPane.add(new Label("Ingresa una descripción para este álbum "), 0, 1);
          
-         //ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
-         GridPane gridPane = new GridPane();
-         gridPane.add(new Label("Ingresa un nombre para este álbum"), 0, 0);
-         gridPane.add(new Label("Ingresa una descripción para este álbum "), 0, 1);
+          TextField tit = new TextField();
+          tit.setPromptText("Título");
+          TextField des = new TextField();
+          des.setPromptText("Descripción");
          
-         TextField tit = new TextField();
-         tit.setPromptText("Título");
-         TextField des = new TextField();
-         des.setPromptText("Descripción");
+          gridPane.add(tit,1,0);
+          gridPane.add(des,1,1);
          
-         gridPane.add(tit,1,0);
-         gridPane.add(des,1,1);
-         
-         Button cr = new Button("Crear");
-         cr.setOnMouseClicked(evento -> {
+          Button cr = new Button("Crear");
+          cr.setOnMouseClicked(evento -> {
              Album al = new Album(tit.getText(),des.getText(),null);
              albumes.add(al);
              System.out.println("Se agregó un nuevo album: "+al.getNombre());
@@ -150,6 +133,7 @@ public class PrincipalController implements Initializable {
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Resultado de la operacion");
                 alert.setContentText("Álbum creado correctamente");
+                dialog.close();
                 alert.showAndWait();
                 
                 }
@@ -158,13 +142,7 @@ public class PrincipalController implements Initializable {
              }
          });
          gridPane.add(cr, 6, 3);
-
-         return gridPane;
-         
-    }
-
-
-    
-    
-    
+         dialog.getDialogPane().setContent(gridPane);
+         dialog.show();     
+    }  
 }

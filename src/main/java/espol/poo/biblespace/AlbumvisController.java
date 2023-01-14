@@ -9,6 +9,7 @@ import espol.poo.objetos.Foto;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Files;
@@ -20,6 +21,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -129,9 +131,29 @@ public class AlbumvisController implements Initializable {
                     System.out.println("Error en la copia del archivo");
               }             
              
-             Foto ft = new Foto(des.getText(),place.getText(),date.getText(),null,null);
+             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date.getText(),null,null);
              fotos.add(ft);
              albumes.get(indice).setFotos(fotos);
+             
+             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
+                 out.writeObject(albumes);
+                 out.flush();
+                llenarImagenes(albumes.get(indice));
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Resultado de la operacion");
+                alert.setContentText("Foto agregada correctamente");
+                dialog.close();
+                alert.showAndWait();
+                }
+             catch(IOException ex) {
+               System.out.println("IOException:" + ex.getMessage());  
+             }
+             
+             
+             
+             
+             
              
          });
          

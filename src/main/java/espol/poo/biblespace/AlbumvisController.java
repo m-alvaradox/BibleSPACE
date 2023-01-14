@@ -7,6 +7,7 @@ package espol.poo.biblespace;
 import espol.poo.objetos.Album;
 import espol.poo.objetos.Foto;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -134,7 +135,7 @@ public class AlbumvisController implements Initializable {
               } catch (IOException ex) {
                     System.out.println("Error en la copia del archivo");
               }             
-             
+         
              Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date.getText(),null,null);
              fotos.add(ft);
              albumes.get(indice).setFotos(fotos);
@@ -197,15 +198,16 @@ public class AlbumvisController implements Initializable {
         for(Foto ft : album.getFotos()) {
             VBox cont = new VBox(1);
             
-            ImageView imgalb = new ImageView();
+            ImageView imageView = new ImageView();
             try {
-                Image image = new Image(ft.getUrl(),100,100,false,false);
-                imgalb.setImage(image);
-            } catch(Exception ex) {
+                FileInputStream input = new FileInputStream(ft.getUrl());
+                Image image = new Image(input);
+                imageView.setImage(image);
+            } catch(IOException ex) {
                 System.out.println("No se encuentra el archivo");
             }
             
-            cont.getChildren().addAll(imgalb);
+            cont.getChildren().addAll(imageView);
             pcontenido.getChildren().add(cont);
             
         }

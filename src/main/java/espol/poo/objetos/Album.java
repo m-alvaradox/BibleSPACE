@@ -20,13 +20,12 @@ public class Album implements Serializable {
     public static ArrayList<Album> cargarAlbumes(String archivo) {
         ArrayList<Album> albumes = new ArrayList<>();
         
-        try(ObjectInputStream oit = new ObjectInputStream(new FileInputStream("galeria.ser"))){
+        try(ObjectInputStream oit = new ObjectInputStream(new FileInputStream(archivo))){
             albumes = (ArrayList<Album>) oit.readObject();
         }
         catch(Exception e) {
             System.out.println("Galeria vacia");
         }
-        // por hacer
         return albumes;
     }
 

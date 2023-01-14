@@ -147,13 +147,4 @@ public class PrincipalController implements Initializable {
          dialog.getDialogPane().setContent(gridPane);
          dialog.show();     
     }
-
-    public void enviarIndice(int indice) {
-        try {
-            FileWriter fichero = new FileWriter("indicealbum.txt");
-            fichero.write(Integer.toString(indice));
-            fichero.close();
-        }
-        catch (Exception ex) { System.out.println("No se encuentra el archivo"); }
-    }
 }

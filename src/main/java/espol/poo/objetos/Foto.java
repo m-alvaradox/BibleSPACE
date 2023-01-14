@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Foto implements Serializable {
     private String url;
     private String descripcion;
-    private String fecha;
     private String lugar;
+    private String fecha;
     private ArrayList<Persona> personas;
     private Album album;
 
@@ -16,6 +16,7 @@ public class Foto implements Serializable {
         this.url = url;
         this.descripcion = descripcion;
         this.lugar = lugar;
+        this.fecha = fecha;
         this.personas = personas;
         this.album = album;
     }

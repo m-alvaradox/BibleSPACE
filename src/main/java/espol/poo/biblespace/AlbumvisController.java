@@ -4,8 +4,7 @@
  */
 package espol.poo.biblespace;
 
-import espol.poo.objetos.Album;
-import espol.poo.objetos.Foto;
+import espol.poo.objetos.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,6 +26,8 @@ import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,6 +36,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -61,6 +65,7 @@ public class AlbumvisController implements Initializable {
     
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
     private ArrayList<Foto> fotos = Foto.cargarFotografias(albumes.get(PrincipalController.indice));
+    private ArrayList<Persona> personas = Persona.cargarPersonas(App.filepeople);
     /**
      * Initializes the controller class.
      */
@@ -110,19 +115,29 @@ public class AlbumvisController implements Initializable {
           
          TextField des = new TextField();
          TextField place = new TextField();
-         TextField date = new TextField();
-         date.setPromptText("26/01/2002");
+         
+         
+         DatePicker datepicker = new DatePicker();
+         datepicker.setValue(LocalDate.now());
+         
+         HBox hpersonas = new HBox(personas.size());
+         
+         for(Persona p : personas) {
+             hpersonas.getChildren().add(new CheckBox(p.getNombre() + p.getApellido()));   
+         }
+         
          TextField people = new TextField();
          people.setPromptText("Marcos,Juana");
          
          gridPane.add(des,1,9);
          gridPane.add(place,1,10);
-         gridPane.add(date,1,11);
+         gridPane.add(datepicker,1,11);
          gridPane.add(people,1,12);
+         gridPane.add(hpersonas, 1, 13);
          
          Button cr = new Button("Cargar");
          gridPane.add(new Label(""),0,13);
-         gridPane.add(cr, 0, 14);
+         gridPane.add(cr, 0, 15);
          
          cr.setOnMouseClicked(evento1 -> {
              //copiar la imagen
@@ -132,9 +147,9 @@ public class AlbumvisController implements Initializable {
                   Files.copy(from, to,StandardCopyOption.REPLACE_EXISTING);
               } catch (IOException ex) {
                     System.out.println("Error en la copia del archivo");
-              }             
-              
-             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date.getText(),null,null);
+              } 
+             String date = datepicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date,null,null);
              fotos.add(ft);
              
              albumes.get(PrincipalController.indice).setFotos(fotos);
@@ -222,4 +237,5 @@ public class AlbumvisController implements Initializable {
         }
         
     }
+    
 }

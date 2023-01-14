@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,6 +35,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 /**
@@ -71,6 +73,8 @@ public class AlbumvisController implements Initializable {
         bttnupload.setTooltip(tbuttonadd);
         bttnmove.setTooltip(tbbtnmove);
         bttnslide.setTooltip(tbttnslide);
+        
+        llenarImagenes(albumes.get(indice));
     }    
     
     @FXML
@@ -149,12 +153,6 @@ public class AlbumvisController implements Initializable {
              catch(IOException ex) {
                System.out.println("IOException:" + ex.getMessage());  
              }
-             
-             
-             
-             
-             
-             
          });
          
          dialog.getDialogPane().setContent(gridPane);
@@ -191,6 +189,30 @@ public class AlbumvisController implements Initializable {
     }
     
     public void llenarImagenes(Album album) {
+        try {
+            if(album.getFotos() == null) {
+                pcontenido.getChildren().add(new Label("<Vacio>"));
+            }
+            
+        for(Foto ft : album.getFotos()) {
+            VBox cont = new VBox(1);
+            
+            ImageView imgalb = new ImageView();
+            try {
+                Image image = new Image(ft.getUrl(),100,100,false,false);
+                imgalb.setImage(image);
+            } catch(Exception ex) {
+                System.out.println(ex);
+                System.out.println("No se encuentra el archivo");
+            }
+            
+            cont.getChildren().addAll(imgalb);
+            pcontenido.getChildren().add(cont);
+            
+        }
+        } catch(Exception ex) {
+            System.out.println("Album vacio");
+        }
         
     }
     

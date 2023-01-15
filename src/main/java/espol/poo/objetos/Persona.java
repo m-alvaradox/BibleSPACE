@@ -110,13 +110,6 @@ public class Persona implements Serializable {
          
          dialog.getDialogPane().setContent(gridPane);
          dialog.show();     
-          
-          
-          
-          
-        
-    }
-    
-    
-    
+ 
+    }    
 }

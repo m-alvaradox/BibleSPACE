@@ -124,17 +124,28 @@ public class AlbumvisController implements Initializable {
          
          HBox hpersonas = new HBox(personas.size());
          
+         ArrayList<Persona> pseleccionadas = new ArrayList<>();
+ 
          for(Persona p : personas) {
-             hpersonas.getChildren().add(new CheckBox(p.getNombre() + p.getApellido()));   
+             CheckBox cb = new CheckBox(p.getNombre() +" "+ p.getApellido());
+             hpersonas.getChildren().add(cb);
+             
+             cb.setOnAction(e-> {
+                 if(cb.isSelected()) {
+                     pseleccionadas.add(p);
+                 } else {
+                     pseleccionadas.remove(p);
+                 }
+             });
          }
          
-         TextField people = new TextField();
-         people.setPromptText("Marcos,Juana");
+//         TextField people = new TextField();
+//         people.setPromptText("Marcos,Juana");
          
          gridPane.add(des,1,9);
          gridPane.add(place,1,10);
          gridPane.add(datepicker,1,11);
-         gridPane.add(people,1,12);
+         //gridPane.add(new Label(seleccionados),1,12);
          gridPane.add(hpersonas, 1, 13);
          
          Button cr = new Button("Cargar");
@@ -149,9 +160,11 @@ public class AlbumvisController implements Initializable {
                   Files.copy(from, to,StandardCopyOption.REPLACE_EXISTING);
               } catch (IOException ex) {
                     System.out.println("Error en la copia del archivo");
-              } 
+              }
+              
              String date = datepicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date,null,null);
+             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date,pseleccionadas,null);
+
              fotos.add(ft);
              
              albumes.get(PrincipalController.indice).setFotos(fotos);
@@ -165,6 +178,7 @@ public class AlbumvisController implements Initializable {
                 alert.setHeaderText("Resultado de la operacion");
                 alert.setContentText("Foto agregada correctamente");
                 System.out.println(imgFile.getName() + " agregada correctamente");
+ 
                 dialog.close();
                 alert.showAndWait();
                 }
@@ -212,9 +226,25 @@ public class AlbumvisController implements Initializable {
             
         for(Foto ft : album.getFotos()) {
             VBox cont = new VBox(1);
-            //System.out.println(ft.getUrl());
-            Tooltip t = new Tooltip("Descripcion: "+ft.getDescripcion()+"\nLugar: "+ft.getLugar()
-                    +"\nTomada el: "+ft.getFecha()+"\nAparece: "+ft.getPersonas());
+            String participantes = "";
+            if((ft.getPersonas() != null)) {
+                for(Persona p : ft.getPersonas()){
+                     participantes += p.getNombre() + " "; 
+                } 
+            } else { participantes = "Sin informacion"; }
+            
+            String descripcion = "";
+            if(ft.getDescripcion().equals("")) {
+                descripcion += "Sin informacion";
+            } else {descripcion += ft.getDescripcion(); }
+            
+            String lugar = "";
+            if(ft.getLugar().equals("")) {
+                lugar += "Sin informacion"; 
+            } else { lugar += ft.getLugar();}
+            
+            Tooltip t = new Tooltip("Descripcion: "+descripcion+"\nLugar: "+lugar
+                    +"\nTomada el: "+ft.getFecha()+"\nAparecen: "+participantes);
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
             
             ImageView imageView = new ImageView();

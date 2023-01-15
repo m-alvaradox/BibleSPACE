@@ -46,12 +46,15 @@ public class PrincipalController implements Initializable {
     
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
     public static int indice;
+    @FXML
+    private Button bttnaddpeople;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Tooltip tbuttonadd = new Tooltip("Crear un álbum nuevo");
         bttnadd.setTooltip(tbuttonadd);
+        bttnaddpeople.setTooltip(new Tooltip("Agregar persona"));
         
         for(Album al : albumes) {
             VBox cont = new VBox(1);
@@ -146,5 +149,10 @@ public class PrincipalController implements Initializable {
          gridPane.add(cr, 6, 3);
          dialog.getDialogPane().setContent(gridPane);
          dialog.show();     
+    }
+
+    @FXML
+    private void agregarpersona(ActionEvent event) {
+        Persona.agregarpersona();
     }
 }

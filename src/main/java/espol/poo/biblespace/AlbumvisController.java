@@ -66,6 +66,8 @@ public class AlbumvisController implements Initializable {
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
     private ArrayList<Foto> fotos = Foto.cargarFotografias(albumes.get(PrincipalController.indice));
     private ArrayList<Persona> personas = Persona.cargarPersonas(App.filepeople);
+    @FXML
+    private Button bttnaddpeople;
     /**
      * Initializes the controller class.
      */
@@ -236,6 +238,11 @@ public class AlbumvisController implements Initializable {
             System.out.println("Album vacio");
         }
         
+    }
+
+    @FXML
+    private void agregarpersona(ActionEvent event) {
+        Persona.agregarpersona();
     }
     
 }

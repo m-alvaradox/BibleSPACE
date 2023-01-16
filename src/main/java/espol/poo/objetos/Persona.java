@@ -1,6 +1,8 @@
 
 package espol.poo.objetos;
 
+import espol.poo.biblespace.AlbumvisController;
+import static espol.poo.biblespace.AlbumvisController.personas;
 import espol.poo.biblespace.App;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -89,6 +91,7 @@ public class Persona implements Serializable {
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Resultado de la operacion");
                 alert.setContentText("Persona agregada correctamente");
+                AlbumvisController.personas = Persona.cargarPersonas(App.filepeople);
                 dialog.close();
                 alert.showAndWait();
                 

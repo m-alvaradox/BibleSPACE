@@ -66,7 +66,7 @@ public class AlbumvisController implements Initializable {
     
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
     private ArrayList<Foto> fotos = Foto.cargarFotografias(albumes.get(PrincipalController.indice));
-    private ArrayList<Persona> personas = Persona.cargarPersonas(App.filepeople);
+    public static ArrayList<Persona> personas = Persona.cargarPersonas(App.filepeople);
     @FXML
     private Button bttnaddpeople;
     @FXML
@@ -274,6 +274,8 @@ public class AlbumvisController implements Initializable {
     @FXML
     private void agregarpersona(ActionEvent event) {
         Persona.agregarpersona();
+        
+        
     }
 
 

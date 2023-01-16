@@ -193,7 +193,7 @@ public class AlbumvisController implements Initializable {
     
     public File buscarArchivo() throws IOException {
         FileChooser fc = new FileChooser();
-        fc.setTitle("Buscar archivoa");
+        fc.setTitle("Buscar archivo");
         
         // Agregar filtros para facilitar la busqueda
         fc.getExtensionFilters().addAll(

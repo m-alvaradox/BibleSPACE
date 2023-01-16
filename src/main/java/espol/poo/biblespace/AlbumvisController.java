@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -68,6 +69,8 @@ public class AlbumvisController implements Initializable {
     private ArrayList<Persona> personas = Persona.cargarPersonas(App.filepeople);
     @FXML
     private Button bttnaddpeople;
+    @FXML
+    private ImageView bttnmover;
     /**
      * Initializes the controller class.
      */
@@ -273,6 +276,10 @@ public class AlbumvisController implements Initializable {
     @FXML
     private void agregarpersona(ActionEvent event) {
         Persona.agregarpersona();
+    }
+
+    @FXML
+    private void moverfotografia(MouseEvent event) {
     }
     
 }

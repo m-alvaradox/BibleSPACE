@@ -82,10 +82,5 @@ public class Foto implements Serializable {
         }
         return ft;
     }
-    
-    
-    
-    
-    
-    
+   
 }

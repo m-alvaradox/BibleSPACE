@@ -57,9 +57,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttnmove" contentDisplay="GRAPHIC_ONLY" layoutX="413.0" layoutY="24.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttneditar" contentDisplay="GRAPHIC_ONLY" layoutX="413.0" layoutY="24.0" mnemonicParsing="false" onAction="#editarfotografia" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
-            <ImageView fx:id="bttnmover" fitHeight="21.0" fitWidth="20.0" onDragDetected="#moverfotografia" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/editbutton.png" />
                </image>

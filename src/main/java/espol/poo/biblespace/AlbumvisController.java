@@ -27,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -57,8 +58,7 @@ public class AlbumvisController implements Initializable {
     private Button bttnupload;
     @FXML
     private Button bttnslide;
-    @FXML
-    private Button bttnmove;
+
     @FXML
     private Button bttnback;
     @FXML
@@ -70,7 +70,7 @@ public class AlbumvisController implements Initializable {
     @FXML
     private Button bttnaddpeople;
     @FXML
-    private ImageView bttnmover;
+    private Button bttneditar;
     /**
      * Initializes the controller class.
      */
@@ -78,9 +78,9 @@ public class AlbumvisController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Tooltip tbuttonadd = new Tooltip("Cargar");
         Tooltip tbttnslide = new Tooltip("Slideshow");
-        Tooltip tbbtnmove = new Tooltip("Mover");
+        Tooltip tbbtnmove = new Tooltip("Editar");
         bttnupload.setTooltip(tbuttonadd);
-        bttnmove.setTooltip(tbbtnmove);
+        bttneditar.setTooltip(tbbtnmove);
         bttnslide.setTooltip(tbttnslide);
         
         llenarImagenes(albumes.get(PrincipalController.indice));
@@ -142,9 +142,6 @@ public class AlbumvisController implements Initializable {
              });
          }
          
-//         TextField people = new TextField();
-//         people.setPromptText("Marcos,Juana");
-         
          gridPane.add(des,1,9);
          gridPane.add(place,1,10);
          gridPane.add(datepicker,1,11);
@@ -172,22 +169,15 @@ public class AlbumvisController implements Initializable {
              
              albumes.get(PrincipalController.indice).setFotos(fotos);
              
-             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
-                 out.writeObject(albumes);
-                 out.flush();
-                llenarImagenes(albumes.get(PrincipalController.indice));
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Resultado de la operacion");
-                alert.setContentText("Foto agregada correctamente");
-                System.out.println(imgFile.getName() + " agregada correctamente");
- 
-                dialog.close();
-                alert.showAndWait();
-                }
-             catch(IOException ex) {
-               System.out.println("IOException:" + ex.getMessage());  
-             }
+             serializaralbumes();
+             
+             llenarImagenes(albumes.get(PrincipalController.indice));
+                
+             dialog.close();
+             mostraralertaconfirmacion("Foto agregada correctamente");
+                
+             System.out.println(imgFile.getName() + " agregada correctamente");
+    
          });
          
          dialog.getDialogPane().setContent(gridPane);
@@ -226,15 +216,23 @@ public class AlbumvisController implements Initializable {
             if(album.getFotos() == null) {
                 pcontenido.getChildren().add(new Label("<Vacio>"));
             }
+            if(album.getFotos().isEmpty()) {
+                pcontenido.getChildren().add(new Label("<Vacio>"));
+            }
             
         for(Foto ft : album.getFotos()) {
             VBox cont = new VBox(1);
             String participantes = "";
-            if((ft.getPersonas() != null)) {
+            
+            if((ft.getPersonas() == null)) {
+                participantes = "Sin informacion";
+            } else if(ft.getPersonas().isEmpty()) {
+                participantes = "Sin informacion";
+            } else {
                 for(Persona p : ft.getPersonas()){
                      participantes += p.getNombre() + " "; 
                 } 
-            } else { participantes = "Sin informacion"; }
+            }
             
             String descripcion = "";
             if(ft.getDescripcion().equals("")) {
@@ -278,8 +276,122 @@ public class AlbumvisController implements Initializable {
         Persona.agregarpersona();
     }
 
+
     @FXML
-    private void moverfotografia(MouseEvent event) {
+    private void editarfotografia(ActionEvent event) {
+          Dialog dialog3 = new Dialog();
+          dialog3.setTitle("Editar Foto");
+          dialog3.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+          
+          ComboBox cbxfoto = new ComboBox();
+          cbxfoto.getItems().setAll(llenarCombo(fotos));
+          
+          ImageView prev1 = new ImageView();
+          
+          cbxfoto.setOnAction(evv-> {
+     
+            try {
+                FileInputStream input1 = new FileInputStream((String)cbxfoto.getValue());
+                Image image2 = new Image(input1);
+                prev1.setImage(image2);
+                prev1.setFitWidth(70);
+                prev1.setFitHeight(70);
+                
+            } catch(IOException ex) {
+                System.out.println("No se encuentra el archivo");
+            }
+   
+            System.out.println(cbxfoto.getValue());
+             });
+          
+          ComboBox cbxalbum = new ComboBox();
+          cbxalbum.getItems().setAll(llenarCombo2(albumes));
+          
+          cbxalbum.setOnAction(evv2-> {
+              System.out.println("Album destino: "+cbxalbum.getValue());
+          });
+          
+          Button bttnmover = new Button("Guardar cambios");
+          
+          bttnmover.setOnMouseClicked(ev5 -> {
+              
+              
+              try {
+              albumes.get(cbxalbum.getSelectionModel().getSelectedIndex()).getFotos().add(fotos.get(cbxfoto.getSelectionModel().getSelectedIndex()));
+              } catch(Exception e) {
+                  ArrayList<Foto> primera = new ArrayList<>();
+                  primera.add(fotos.get(cbxfoto.getSelectionModel().getSelectedIndex()));
+                  albumes.get(cbxalbum.getSelectionModel().getSelectedIndex()).setFotos(primera);
+              }
+              
+              albumes.get(PrincipalController.indice).getFotos().remove(fotos.get(cbxfoto.getSelectionModel().getSelectedIndex()));
+              
+              
+              serializaralbumes();
+              llenarImagenes(albumes.get(PrincipalController.indice));
+              
+              System.out.println(cbxfoto.getValue() + " fue movido a: "+cbxalbum.getValue());
+ 
+              dialog3.close();
+              mostraralertaconfirmacion("Foto editada correctamente");
+                
+          });
+          
+          
+          GridPane gridPane3 = new GridPane();
+          gridPane3.add(new Label("Seleccione foto "), 0, 0);
+          gridPane3.add(cbxfoto, 1, 0);
+          
+          gridPane3.add(new Label("Mover a "), 0, 10);
+          gridPane3.add(cbxalbum,1,10);
+          gridPane3.add(bttnmover, 1, 11);
+          gridPane3.add(prev1, 5, 10);
+          
+          
+          
+          dialog3.getDialogPane().setContent(gridPane3);
+          dialog3.show();
     }
+    
+    public ArrayList<String> llenarCombo(ArrayList<Foto> fotos1) {
+        ArrayList<String> sfotos = new ArrayList<>();
+        for(Foto ph : fotos1) {
+            sfotos.add(ph.getUrl());
+        }
+        
+        return sfotos;
+        
+    }
+    
+    public ArrayList<String> llenarCombo2(ArrayList<Album> albumes1) {
+        ArrayList<String> salbumes = new ArrayList<>();
+        for(Album al2 : albumes1) {
+            salbumes.add(al2.getNombre());
+            
+        }
+        
+        return salbumes;
+    }
+    
+    public void serializaralbumes() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
+                 out.writeObject(albumes);
+                 out.flush();
+                
+                }
+             catch(IOException ex) {
+               System.out.println("IOException:" + ex.getMessage());  
+             }
+    }
+    
+    public void mostraralertaconfirmacion(String msg) {
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             alert.setTitle("Confirmation Dialog");
+             alert.setHeaderText("Resultado de la operacion");
+             alert.setContentText(msg);
+             alert.showAndWait();      
+    }
+    
     
 }

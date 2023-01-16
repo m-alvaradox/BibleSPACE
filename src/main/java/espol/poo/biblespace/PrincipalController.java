@@ -56,52 +56,7 @@ public class PrincipalController implements Initializable {
         bttnadd.setTooltip(tbuttonadd);
         bttnaddpeople.setTooltip(new Tooltip("Agregar persona"));
         
-        for(Album al : albumes) {
-            VBox cont = new VBox(1);
-            Label lblnom = new Label(al.getNombre());
-            Tooltip t = new Tooltip(al.getDescripcion());
-            t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
-            
-            ImageView imgalb = new ImageView();
-            try {
-            Image image = new Image(App.fileimages +"Albumdefault.png",100,100,false,false);
-            imgalb.setImage(image);
-            } catch(Exception ex) {
-                System.out.println("No se encuentra el archivo");
-            }
-            //lblnom.setTooltip(t);
-            imgalb.setCursor(Cursor.HAND);
-            Tooltip.install(imgalb, t);
-            
-            imgalb.setOnMouseClicked(event -> 
-            { //AlbumvisController.albumseleccionado(al);
-                try {
-                PrincipalController.indice = albumes.indexOf(al);
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("albumvis.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
-                AlbumvisController avc = fxmlLoader.getController();
-                avc.llenarTitulo(al);
-                
-                
-                
-                //para dormir
-//                Thread mith = Thread.currentThread();
-//                try {
-//                    mith.sleep(4000);  // en milisegundos
-//                    } catch(InterruptedException ie) {
-//                        System.err.println("Capturada InterruptedException: "+ie);
-//                    }
-                
-                App.changeRoot(root);
-                
-                } catch(IOException ex) {System.out.println("Error"); }
-            
-            }); 
-            
-            cont.getChildren().addAll(imgalb,lblnom);
-            pcontenido.getChildren().add(cont);
-              
-        }
+        llenaralbumes();
     }
 
     @FXML
@@ -130,21 +85,15 @@ public class PrincipalController implements Initializable {
              System.out.println("Se agregó un nuevo album: "+al.getNombre());
              System.out.println("Descripcion: "+al.getDescripcion());
              
-             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
-                 out.writeObject(albumes);
-                 out.flush();
-                App.setRoot("principal");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Resultado de la operacion");
-                alert.setContentText("Álbum creado correctamente");
-                dialog.close();
-                alert.showAndWait();
-                
-                }
-             catch(IOException ex) {
-               System.out.println("IOException:" + ex.getMessage());  
-             }
+             serializaralbumes();
+             
+             pcontenido.getChildren().clear();
+             
+             llenaralbumes();
+             
+             dialog.close();
+             mostraralertaconfirmacion("Álbum creado correctamente");
+     
          });
          gridPane.add(cr, 6, 3);
          dialog.getDialogPane().setContent(gridPane);
@@ -155,4 +104,80 @@ public class PrincipalController implements Initializable {
     private void agregarpersona(ActionEvent event) {
         Persona.agregarpersona();
     }
+    
+    public void serializaralbumes() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.archgaleria))) {
+                 out.writeObject(albumes);
+                 out.flush();
+                }
+             catch(IOException ex) {
+               System.out.println("IOException:" + ex.getMessage());  
+             }
+        
+    }
+    
+    public void llenaralbumes() {
+        
+        for(Album al : albumes) {
+            VBox cont = new VBox(1);
+            Label lblnom = new Label(al.getNombre());
+            
+            Tooltip t;
+            if(al.getDescripcion().equals("")) {
+                t = new Tooltip("Sin informacion");
+            } else {
+                t = new Tooltip(al.getDescripcion());
+            }
+
+            t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
+            
+            ImageView imgalb = new ImageView();
+            try {
+            Image image = new Image(App.fileimages +"Albumdefault.png",100,100,false,false);
+            imgalb.setImage(image);
+            } catch(Exception ex) {
+                System.out.println("No se encuentra el archivo");
+            }
+            //lblnom.setTooltip(t);
+            imgalb.setCursor(Cursor.HAND);
+            Tooltip.install(imgalb, t);
+            
+            imgalb.setOnMouseClicked(event -> 
+            { 
+                try {
+                PrincipalController.indice = albumes.indexOf(al);
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("albumvis.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                AlbumvisController avc = fxmlLoader.getController();
+                avc.llenarTitulo(al);
+
+                App.changeRoot(root);
+                
+                } catch(IOException ex) {System.out.println("Error"); }
+            
+            }); 
+            
+            cont.getChildren().addAll(imgalb,lblnom);
+            pcontenido.getChildren().add(cont);
+              
+        }
+        
+    }
+    
+    public void mostraralertaconfirmacion(String msg) {
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             alert.setTitle("Confirmation Dialog");
+             alert.setHeaderText("Resultado de la operacion");
+             alert.setContentText(msg);
+             alert.showAndWait();      
+    }
+    
+                    //para dormir
+//                Thread mith = Thread.currentThread();
+//                try {
+//                    mith.sleep(4000);  // en milisegundos
+//                    } catch(InterruptedException ie) {
+//                        System.err.println("Capturada InterruptedException: "+ie);
+//                    }
 }

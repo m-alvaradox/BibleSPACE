@@ -54,6 +54,8 @@ public class PrincipalController implements Initializable {
     private Button bttnsearch;
     @FXML
     private Button bttneditar;
+    @FXML
+    private Button bttneditpeople;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -266,4 +268,7 @@ public class PrincipalController implements Initializable {
         return salbumes;
         
     }
+    
+    @FXML
+    private void editarpersona(ActionEvent event) {}
 }

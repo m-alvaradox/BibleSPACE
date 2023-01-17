@@ -63,6 +63,8 @@ public class AlbumvisController implements Initializable {
     private Button bttnback;
     @FXML
     private Text nomalbum;
+    @FXML
+    private Button bttneditpeople;
     
     private ArrayList<Album> albumes = Album.cargarAlbumes(App.archgaleria);
     private ArrayList<Foto> fotos = Foto.cargarFotografias(albumes.get(PrincipalController.indice));
@@ -405,6 +407,9 @@ public class AlbumvisController implements Initializable {
             
         return t;
     }
+    
+    @FXML
+    private void editarpersona(ActionEvent event) {}
     
     
 }

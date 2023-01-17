@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttnaddpeople" contentDisplay="GRAPHIC_ONLY" layoutX="455.0" layoutY="24.0" mnemonicParsing="false" onAction="#agregarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttnaddpeople" contentDisplay="GRAPHIC_ONLY" layoutX="415.0" layoutY="24.0" mnemonicParsing="false" onAction="#agregarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -52,7 +52,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttnsearch" contentDisplay="GRAPHIC_ONLY" layoutX="363.0" layoutY="24.0" mnemonicParsing="false" onAction="#filtrado" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttnsearch" contentDisplay="GRAPHIC_ONLY" layoutX="325.0" layoutY="24.0" mnemonicParsing="false" onAction="#filtrado" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -67,11 +67,26 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttneditar" contentDisplay="GRAPHIC_ONLY" layoutX="409.0" layoutY="24.0" mnemonicParsing="false" onAction="#editaralbum" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttneditar" contentDisplay="GRAPHIC_ONLY" layoutX="370.0" layoutY="24.0" mnemonicParsing="false" onAction="#editaralbum" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/editbutton.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bttneditpeople" contentDisplay="GRAPHIC_ONLY" layoutX="459.0" layoutY="24.0" mnemonicParsing="false" onAction="#editarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/editpeoplebutton.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />

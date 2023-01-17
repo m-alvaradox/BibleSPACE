@@ -48,6 +48,8 @@ public class PrincipalController implements Initializable {
     public static int indice;
     @FXML
     private Button bttnaddpeople;
+    @FXML
+    private Button bttnsearch;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -180,4 +182,17 @@ public class PrincipalController implements Initializable {
 //                    } catch(InterruptedException ie) {
 //                        System.err.println("Capturada InterruptedException: "+ie);
 //                    }
+
+    @FXML
+    private void filtrado(ActionEvent event) throws IOException {
+           try {
+                FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("filtros.fxml"));
+                Parent root1 = (Parent) fxmlLoader1.load();
+                FiltrosController fill = fxmlLoader1.getController();
+
+                App.changeRoot(root1);
+                
+                } catch(IOException ex) {System.out.println("Error"); }
+        
+    }
 }

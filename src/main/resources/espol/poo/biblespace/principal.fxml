@@ -52,7 +52,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttnsearch" contentDisplay="GRAPHIC_ONLY" layoutX="405.0" layoutY="24.0" mnemonicParsing="false" onAction="#agregarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttnsearch" contentDisplay="GRAPHIC_ONLY" layoutX="405.0" layoutY="24.0" mnemonicParsing="false" onAction="#filtrado" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>

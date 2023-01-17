@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="528.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.biblespace.FiltrosController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="nomalbum" layoutX="34.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscar por:" wrappingWidth="98.47991943359375">
+         <font>
+            <Font name="Sans Serif Collection" size="20.0" />
+         </font>
+      </Text>
+      <Button fx:id="bttnback" layoutX="469.0" layoutY="24.0" mnemonicParsing="false" onAction="#regresar" prefHeight="31.0" prefWidth="108.0" stylesheets="@../css/estilos.css" text="&lt; Mis álbumes">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <HBox alignment="CENTER" layoutX="152.0" layoutY="78.0" prefHeight="38.0" prefWidth="433.0" spacing="10.0">
+         <children>
+            <RadioButton fx:id="radioFecha" mnemonicParsing="false" onAction="#radioCheck" text="Fecha">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/fecharadiobutton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="group" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioLugar" mnemonicParsing="false" onAction="#radioCheck" text="Lugar" toggleGroup="$group">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/lugarradiobutton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </RadioButton>
+            <RadioButton fx:id="radioPersona" mnemonicParsing="false" onAction="#radioCheck" text="Persona" toggleGroup="$group">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/persona.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </RadioButton>
+         </children></HBox>
+      <Text fx:id="textoresultado1" layoutX="32.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Sans Serif Collection" size="20.0" />
+         </font>
+      </Text>
+      <Separator layoutX="32.0" layoutY="121.0" prefHeight="3.0" prefWidth="551.0" />
+      <HBox fx:id="hboxafiltrar" layoutX="32.0" layoutY="128.0" prefHeight="100.0" prefWidth="551.0" />
+      <ScrollPane layoutX="34.0" layoutY="251.0" prefHeight="238.0" prefWidth="625.0">
+         <content>
+            <HBox fx:id="hscroll" prefHeight="238.0" prefWidth="627.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

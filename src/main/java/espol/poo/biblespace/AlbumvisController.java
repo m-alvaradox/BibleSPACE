@@ -68,9 +68,9 @@ public class AlbumvisController implements Initializable {
     private ArrayList<Foto> fotos = Foto.cargarFotografias(albumes.get(PrincipalController.indice));
     public static ArrayList<Persona> personas = Persona.cargarPersonas(App.filepeople);
     @FXML
-    private Button bttnaddpeople;
-    @FXML
     private Button bttneditar;
+    @FXML
+    private Button bttnaddpeople;
     /**
      * Initializes the controller class.
      */
@@ -163,7 +163,7 @@ public class AlbumvisController implements Initializable {
               }
               
              String date = datepicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText(),date,pseleccionadas,null);
+             Foto ft = new Foto(imgFile.getName(),des.getText(),place.getText().toUpperCase(),date,pseleccionadas,null);
 
              fotos.add(ft);
              
@@ -222,39 +222,18 @@ public class AlbumvisController implements Initializable {
             
         for(Foto ft : album.getFotos()) {
             VBox cont = new VBox(1);
-            String participantes = "";
-            
-            if((ft.getPersonas() == null)) {
-                participantes = "Sin informacion";
-            } else if(ft.getPersonas().isEmpty()) {
-                participantes = "Sin informacion";
-            } else {
-                for(Persona p : ft.getPersonas()){
-                     participantes += p.getNombre() + " "; 
-                } 
-            }
-            
-            String descripcion = "";
-            if(ft.getDescripcion().equals("")) {
-                descripcion += "Sin informacion";
-            } else {descripcion += ft.getDescripcion(); }
-            
-            String lugar = "";
-            if(ft.getLugar().equals("")) {
-                lugar += "Sin informacion"; 
-            } else { lugar += ft.getLugar();}
-            
-            Tooltip t = new Tooltip("Descripcion: "+descripcion+"\nLugar: "+lugar
-                    +"\nTomada el: "+ft.getFecha()+"\nAparecen: "+participantes);
-            t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
-            
+            Tooltip t = generarTooltip(ft);
             ImageView imageView = new ImageView();
             try {
                 FileInputStream input = new FileInputStream(ft.getUrl());
                 Image image = new Image(input);
                 imageView.setImage(image);
-                imageView.setFitWidth(0.10*image.getWidth());
-                imageView.setFitHeight(0.10*image.getHeight());
+                
+                // tamaño porcentaje
+                //imageView.setFitWidth(0.10*image.getWidth());
+                
+                imageView.setFitWidth(150);
+                imageView.setFitHeight(100);
                 
             } catch(IOException ex) {
                 System.out.println("No se encuentra el archivo");
@@ -393,6 +372,37 @@ public class AlbumvisController implements Initializable {
              alert.setHeaderText("Resultado de la operacion");
              alert.setContentText(msg);
              alert.showAndWait();      
+    }
+    
+    public Tooltip generarTooltip(Foto ft) {
+        
+        String participantes = "";
+            
+            if((ft.getPersonas() == null)) {
+                participantes = "Sin informacion";
+            } else if(ft.getPersonas().isEmpty()) {
+                participantes = "Sin informacion";
+            } else {
+                for(Persona p : ft.getPersonas()){
+                     participantes += p.getNombre() + " "; 
+                } 
+            }
+            
+            String descripcion = "";
+            if(ft.getDescripcion().equals("")) {
+                descripcion += "Sin informacion";
+            } else {descripcion += ft.getDescripcion(); }
+            
+            String lugar = "";
+            if(ft.getLugar().equals("")) {
+                lugar += "Sin informacion"; 
+            } else { lugar += ft.getLugar();}
+            
+            Tooltip t = new Tooltip("Descripcion: "+descripcion+"\nLugar: "+lugar
+                    +"\nTomada el: "+ft.getFecha()+"\nAparecen: "+participantes);
+            t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
+            
+        return t;
     }
     
     

@@ -71,38 +71,65 @@ public class FiltrosController implements Initializable {
     public void radioCheck(ActionEvent event) {
         hboxafiltrar.getChildren().clear();
         hscroll.getChildren().clear();
+        textoresultado1.setText("");
+        
         if(radioLugar.isSelected()) {
             ComboBox cbxlugares = new ComboBox();
             cbxlugares.getItems().setAll(llenarcombolugares());
             
             cbxlugares.setOnAction(ev -> {
+                textoresultado1.setText("Mostrando resultados");
                 hscroll.getChildren().clear();
-                
+
                 for(Album alx : albumes ) {
                     for(Foto fts : alx.getFotos()) {
                         if(fts.getLugar().equals((String) cbxlugares.getValue())) {
                             ImageView img = crearimagen(fts);
-                            Tooltip tltp = generarTooltip(fts);
+                            Tooltip tltp = generarTooltip(fts,alx);
                             Tooltip.install(img, tltp);
                             hscroll.getChildren().add(img);
                         }
                     }
                 }
             });
-            
-            
-            
-            hboxafiltrar.getChildren().add(new Label("Buscar fotos o albumes tomadas de: "));
+
+            hboxafiltrar.getChildren().add(new Label("Buscar fotos tomadas en: "));
             hboxafiltrar.getChildren().add(cbxlugares);
-            
-            
-            
-            
-            
+ 
         }
         
         if(radioPersona.isSelected()) {
-            hboxafiltrar.getChildren().add(new Label("Persona is selected"));
+            ComboBox cbxpersonas = new ComboBox();
+            cbxpersonas.getItems().setAll(llenarcombopersonas());
+            
+            cbxpersonas.setOnAction(ev1 -> {
+                textoresultado1.setText("Mostrando resultados");
+                hscroll.getChildren().clear();
+                for(Album alx1 : albumes) {
+                    for(Foto fts1 : alx1.getFotos()) {
+                        for(Persona per : fts1.getPersonas()) {
+                            
+                            if(per.getNombre().equals(AlbumvisController.personas.get(cbxpersonas.getSelectionModel().getSelectedIndex()).getNombre())
+                                    & per.getApellido().equals(AlbumvisController.personas.get(cbxpersonas.getSelectionModel().getSelectedIndex()).getApellido())) {
+                                
+                                ImageView img2 = crearimagen(fts1);
+                                Tooltip tltp = generarTooltip(fts1,alx1);
+                                Tooltip.install(img2, tltp);
+                                hscroll.getChildren().add(img2); 
+                                
+                                
+                                
+                            }
+                        }
+                        
+                            
+                        }
+                    }
+                
+            });
+   
+            hboxafiltrar.getChildren().add(new Label("Buscar fotos o albumes donde aparece: "));
+            hboxafiltrar.getChildren().add(cbxpersonas);
         }
     }
     
@@ -127,6 +154,17 @@ public class FiltrosController implements Initializable {
         
     }
     
+    public ArrayList<String> llenarcombopersonas() {
+        ArrayList<String> lpersonas = new ArrayList<>();
+        for(Persona p : AlbumvisController.personas) {
+            lpersonas.add(p.getNombre() +" "+ p.getApellido());
+        }
+        return lpersonas;
+    }
+    
+    
+    
+    
     public ImageView crearimagen(Foto ft) {
         ImageView imageView = new ImageView();
         try {
@@ -146,7 +184,7 @@ public class FiltrosController implements Initializable {
     return imageView;    
     }
     
-    public Tooltip generarTooltip(Foto ft) {
+    public Tooltip generarTooltip(Foto ft, Album al) {
         
         String participantes = "";
         
@@ -171,7 +209,8 @@ public class FiltrosController implements Initializable {
             } else { lugar += ft.getLugar();}
             
             Tooltip t = new Tooltip("Descripcion: "+descripcion+"\nLugar: "+lugar
-                    +"\nTomada el: "+ft.getFecha()+"\nAparecen: "+participantes);
+                    +"\nTomada el: "+ft.getFecha()+"\nAparecen: "+participantes +
+                    "\nPertenece a: "+al.getNombre());
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
         return t;    
     }

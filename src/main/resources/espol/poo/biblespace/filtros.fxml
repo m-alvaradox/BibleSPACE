@@ -84,5 +84,6 @@
             <HBox fx:id="hscroll" prefHeight="238.0" prefWidth="627.0" />
          </content>
       </ScrollPane>
+      <Text fx:id="txtresal" layoutX="34.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="348.13671875" />
    </children>
 </AnchorPane>

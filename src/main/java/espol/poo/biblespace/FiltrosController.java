@@ -61,6 +61,8 @@ public class FiltrosController implements Initializable {
     private HBox hboxafiltrar;
     @FXML
     private HBox hscroll;
+    @FXML
+    private Text txtresal;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +74,7 @@ public class FiltrosController implements Initializable {
         hboxafiltrar.getChildren().clear();
         hscroll.getChildren().clear();
         textoresultado1.setText("");
+        txtresal.setText("");
         
         if(radioLugar.isSelected()) {
             ComboBox cbxlugares = new ComboBox();
@@ -104,11 +107,12 @@ public class FiltrosController implements Initializable {
             
             cbxpersonas.setOnAction(ev1 -> {
                 textoresultado1.setText("Mostrando resultados");
+                String msg = (String) cbxpersonas.getValue() + " aparece en: ";
+                
                 hscroll.getChildren().clear();
                 for(Album alx1 : albumes) {
                     for(Foto fts1 : alx1.getFotos()) {
-                        for(Persona per : fts1.getPersonas()) {
-                            
+                        for(Persona per : fts1.getPersonas()) {    
                             if(per.getNombre().equals(AlbumvisController.personas.get(cbxpersonas.getSelectionModel().getSelectedIndex()).getNombre())
                                     & per.getApellido().equals(AlbumvisController.personas.get(cbxpersonas.getSelectionModel().getSelectedIndex()).getApellido())) {
                                 
@@ -117,15 +121,14 @@ public class FiltrosController implements Initializable {
                                 Tooltip.install(img2, tltp);
                                 hscroll.getChildren().add(img2); 
                                 
-                                
-                                
+                                msg += alx1.getNombre() + ", ";  
                             }
                         }
                         
                             
                         }
                     }
-                
+                txtresal.setText(msg);
             });
    
             hboxafiltrar.getChildren().add(new Label("Buscar fotos o albumes donde aparece: "));

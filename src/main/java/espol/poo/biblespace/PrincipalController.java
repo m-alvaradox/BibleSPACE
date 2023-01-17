@@ -21,12 +21,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -50,6 +52,8 @@ public class PrincipalController implements Initializable {
     private Button bttnaddpeople;
     @FXML
     private Button bttnsearch;
+    @FXML
+    private Button bttneditar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,6 +61,7 @@ public class PrincipalController implements Initializable {
         Tooltip tbuttonadd = new Tooltip("Crear un álbum nuevo");
         bttnadd.setTooltip(tbuttonadd);
         bttnaddpeople.setTooltip(new Tooltip("Agregar persona"));
+        bttnsearch.setTooltip(new Tooltip("Buscar"));
         
         llenaralbumes();
     }
@@ -193,6 +198,72 @@ public class PrincipalController implements Initializable {
                 App.changeRoot(root1);
                 
                 } catch(IOException ex) {System.out.println("Error"); }
+        
+    }
+
+    @FXML
+    private void editaralbum(ActionEvent event) {
+          Dialog dialog = new Dialog();
+          dialog.setTitle("Editar Álbum");
+          dialog.setResizable(true);
+          dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+          
+          GridPane gridPane = new GridPane();
+          gridPane.add(new Label("Seleccione album"), 0, 0);
+          
+          
+          ComboBox cbxalbum = new ComboBox();
+          cbxalbum.getItems().setAll(llenarCombo());
+          gridPane.add(cbxalbum, 1, 0);
+          
+          cbxalbum.setOnAction(evvb -> {
+              gridPane.add(new Label("Nombre"), 0, 2);
+              gridPane.add(new Label("Descripcion"), 0, 3);
+              
+              TextField txtnom = new TextField();
+              TextField txtdes = new TextField();
+              
+              gridPane.add(txtnom, 1, 2);
+              gridPane.add(txtdes, 1, 3);
+              
+              Button bttnmod = new Button("Modificar Album");
+              Button bttnelmininar = new Button("Eliminar Album");
+              
+              gridPane.add(bttnmod, 0, 5);
+              gridPane.add(bttnelmininar , 1, 5);
+              
+              bttnmod.setOnMouseClicked(ev6 -> {
+                  
+                  albumes.get(cbxalbum.getSelectionModel().getSelectedIndex()).setNombre(txtnom.getText());
+                  albumes.get(cbxalbum.getSelectionModel().getSelectedIndex()).setDescripcion(txtdes.getText());
+                  serializaralbumes();
+                  pcontenido.getChildren().clear();
+                  llenaralbumes();
+                  dialog.close();
+                  mostraralertaconfirmacion("Album modificado correctamente");
+              });
+              
+              bttnelmininar.setOnMouseClicked(ev7-> {                  
+                  albumes.remove(cbxalbum.getSelectionModel().getSelectedIndex());
+                  serializaralbumes();
+                  pcontenido.getChildren().clear();
+                  llenaralbumes();
+                  dialog.close();
+                  mostraralertaconfirmacion("Album eliminado correctamente");
+              });
+
+          });
+         dialog.getDialogPane().setContent(gridPane);
+         dialog.show();    
+        
+    }
+    
+    public ArrayList<String> llenarCombo() {
+        ArrayList<String> salbumes = new ArrayList<>();
+        for(Album album : albumes) {
+            salbumes.add(album.getNombre());
+        }
+        return salbumes;
         
     }
 }

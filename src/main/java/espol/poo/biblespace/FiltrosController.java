@@ -10,7 +10,9 @@ import espol.poo.objetos.Persona;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +22,7 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
@@ -107,6 +110,8 @@ public class FiltrosController implements Initializable {
             
             cbxpersonas.setOnAction(ev1 -> {
                 textoresultado1.setText("Mostrando resultados");
+                ArrayList<Album> alganador = new ArrayList<>();
+                alganador.removeAll(alganador);
                 String msg = (String) cbxpersonas.getValue() + " aparece en: ";
                 
                 hscroll.getChildren().clear();
@@ -121,7 +126,9 @@ public class FiltrosController implements Initializable {
                                 Tooltip.install(img2, tltp);
                                 hscroll.getChildren().add(img2); 
                                 
-                                msg += alx1.getNombre() + ", ";  
+                                if(!alganador.contains(alx1)) {
+                                    alganador.add(alx1); 
+                                    msg += alx1.getNombre() + ", ";  }
                             }
                         }
                         
@@ -133,6 +140,24 @@ public class FiltrosController implements Initializable {
    
             hboxafiltrar.getChildren().add(new Label("Buscar fotos o albumes donde aparece: "));
             hboxafiltrar.getChildren().add(cbxpersonas);
+        }
+        
+        if(radioFecha.isSelected()) {
+            DatePicker desde = new DatePicker();
+            DatePicker hasta = new DatePicker();
+            Button bttnbuscar = new Button("Buscar");
+            hboxafiltrar.getChildren().add(new Label("Desde: "));
+            hboxafiltrar.getChildren().add(desde);
+            hboxafiltrar.getChildren().add(new Label("Hasta: "));
+            hboxafiltrar.getChildren().add(hasta);
+            hboxafiltrar.getChildren().add(bttnbuscar);
+            
+            bttnbuscar.setOnMouseClicked(eventb -> {
+                String dateinicio = desde.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                String datefinal = desde.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                                
+            });
+
         }
     }
     
@@ -217,6 +242,4 @@ public class FiltrosController implements Initializable {
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
         return t;    
     }
-    
-
 }

@@ -262,6 +262,7 @@ public class AlbumvisController implements Initializable {
     private void editarfotografia(ActionEvent event) {
           Dialog dialog3 = new Dialog();
           dialog3.setTitle("Editar Foto");
+          dialog3.setResizable(true);
           dialog3.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
           
           ComboBox cbxfoto = new ComboBox();

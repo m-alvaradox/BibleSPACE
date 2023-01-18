@@ -22,7 +22,7 @@
          </font>
       </Text>
       <FlowPane fx:id="pcontenido" layoutX="28.0" layoutY="128.0" prefHeight="298.0" prefWidth="511.0" />
-      <Button fx:id="bttnadd" contentDisplay="GRAPHIC_ONLY" layoutX="503.0" layoutY="24.0" mnemonicParsing="false" onAction="#btncargar" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttnadd" contentDisplay="GRAPHIC_ONLY" layoutX="459.0" layoutY="24.0" mnemonicParsing="false" onAction="#btncargar" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -72,21 +72,6 @@
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/editbutton.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </ImageView>
-         </graphic>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="bttneditpeople" contentDisplay="GRAPHIC_ONLY" layoutX="459.0" layoutY="24.0" mnemonicParsing="false" onAction="#editarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
-         <graphic>
-            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/editpeoplebutton.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />

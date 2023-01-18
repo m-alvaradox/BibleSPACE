@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttnback" layoutX="253.0" layoutY="24.0" mnemonicParsing="false" onAction="#regresar" prefHeight="31.0" prefWidth="108.0" stylesheets="@../css/estilos.css" text="&lt; Mis álbumes">
+      <Button fx:id="bttnback" layoutX="296.0" layoutY="24.0" mnemonicParsing="false" onAction="#regresar" prefHeight="31.0" prefWidth="108.0" stylesheets="@../css/estilos.css" text="&lt; Mis álbumes">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -72,26 +72,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bttnaddpeople" contentDisplay="GRAPHIC_ONLY" layoutX="370.0" layoutY="24.0" mnemonicParsing="false" onAction="#agregarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
+      <Button fx:id="bttnaddpeople" contentDisplay="GRAPHIC_ONLY" layoutX="414.0" layoutY="24.0" mnemonicParsing="false" onAction="#agregarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/add2button.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </ImageView>
-         </graphic>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="bttneditpeople" contentDisplay="GRAPHIC_ONLY" layoutX="414.0" layoutY="24.0" mnemonicParsing="false" onAction="#editarpersona" prefHeight="31.0" prefWidth="31.0" stylesheets="@../css/estilos.css">
-         <graphic>
-            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/editpeoplebutton.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />

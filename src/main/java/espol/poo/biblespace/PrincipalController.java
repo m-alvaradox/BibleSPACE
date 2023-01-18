@@ -64,6 +64,7 @@ public class PrincipalController implements Initializable {
         bttnadd.setTooltip(tbuttonadd);
         bttnaddpeople.setTooltip(new Tooltip("Agregar persona"));
         bttnsearch.setTooltip(new Tooltip("Buscar"));
+        bttneditar.setTooltip(new Tooltip("Editar albumes"));
         
         llenaralbumes();
     }
@@ -222,8 +223,8 @@ public class PrincipalController implements Initializable {
               gridPane.add(new Label("Nombre"), 0, 2);
               gridPane.add(new Label("Descripcion"), 0, 3);
               
-              TextField txtnom = new TextField();
-              TextField txtdes = new TextField();
+              TextField txtnom = new TextField(albumes.get(cbxalbum.getSelectionModel().getSelectedIndex()).getNombre());
+              TextField txtdes = new TextField(albumes.get(cbxalbum.getSelectionModel().getSelectedIndex()).getDescripcion());
               
               gridPane.add(txtnom, 1, 2);
               gridPane.add(txtdes, 1, 3);
@@ -268,7 +269,4 @@ public class PrincipalController implements Initializable {
         return salbumes;
         
     }
-    
-    @FXML
-    private void editarpersona(ActionEvent event) {}
 }

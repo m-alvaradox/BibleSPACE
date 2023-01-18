@@ -84,6 +84,7 @@ public class AlbumvisController implements Initializable {
         bttnupload.setTooltip(tbuttonadd);
         bttneditar.setTooltip(tbbtnmove);
         bttnslide.setTooltip(tbttnslide);
+        bttnaddpeople.setTooltip(new Tooltip("Agregar persona"));
         
         llenarImagenes(albumes.get(PrincipalController.indice));
     }    
@@ -296,6 +297,7 @@ public class AlbumvisController implements Initializable {
           });
           
           Button bttnmover = new Button("Guardar cambios");
+          Button bttndel = new Button("Eliminar imagen");
           
           bttnmover.setOnMouseClicked(ev5 -> {
               
@@ -321,14 +323,25 @@ public class AlbumvisController implements Initializable {
                 
           });
           
+          bttndel.setOnMouseClicked(ev6 -> {
+              albumes.get(PrincipalController.indice).getFotos().remove(fotos.get(cbxfoto.getSelectionModel().getSelectedIndex()));
+              serializaralbumes();
+              llenarImagenes(albumes.get(PrincipalController.indice));
+              System.out.println(cbxfoto.getValue() + " fue eliminada");
+              dialog3.close();
+              mostraralertaconfirmacion("Foto eliminada correctamente");
+              
+          });
+          
           
           GridPane gridPane3 = new GridPane();
           gridPane3.add(new Label("Seleccione foto "), 0, 0);
           gridPane3.add(cbxfoto, 1, 0);
           
-          gridPane3.add(new Label("Mover a "), 0, 10);
+          gridPane3.add(new Label("Destino "), 0, 10);
           gridPane3.add(cbxalbum,1,10);
-          gridPane3.add(bttnmover, 1, 11);
+          gridPane3.add(bttnmover, 1, 13);
+          gridPane3.add(bttndel, 0, 13);
           gridPane3.add(prev1, 5, 10);
           
           
@@ -406,10 +419,5 @@ public class AlbumvisController implements Initializable {
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
             
         return t;
-    }
-    
-    @FXML
-    private void editarpersona(ActionEvent event) {}
-    
-    
+    }    
 }

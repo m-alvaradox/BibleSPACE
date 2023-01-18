@@ -5,6 +5,8 @@
 package espol.poo.biblespace;
 
 import espol.poo.objetos.*;
+import espol.poo.slideshow.NiceSliderShow;
+import espol.poo.util.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,10 +20,15 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
@@ -44,6 +51,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
@@ -58,7 +66,6 @@ public class AlbumvisController implements Initializable {
     private Button bttnupload;
     @FXML
     private Button bttnslide;
-
     @FXML
     private Button bttnback;
     @FXML
@@ -419,5 +426,40 @@ public class AlbumvisController implements Initializable {
             t.setFont(Font.font("Verdana", FontPosture.REGULAR, 10));
             
         return t;
-    }    
+    }
+    
+    @FXML
+    private void slideshow(ActionEvent event) throws IOException {
+
+        Stage stage1 = new Stage();
+        NiceSliderShow sliderShow = new NiceSliderShow();
+    
+        ArrayList<Image> imagenes = new ArrayList<>();
+        try {
+            for(Foto ft : albumes.get(PrincipalController.indice).getFotos()) {
+                FileInputStream input = new FileInputStream(ft.getUrl());
+                Image image = new Image(input);
+                imagenes.add(image);    
+            }
+
+            } catch(IOException ex) {
+                System.out.println("No se encuentra el archivo");
+            }
+         
+        for(Image i : imagenes) {
+            sliderShow.setImages(imagenes);
+        }
+ 
+
+        
+        sliderShow.setPrefHeight(600);
+        sliderShow.setPrefWidth(1024);
+        
+        sliderShow.initSliderShow(2, 4);
+        
+        stage1.setScene(new Scene(sliderShow));
+        stage1.show();
+        
+        
+    }
 }

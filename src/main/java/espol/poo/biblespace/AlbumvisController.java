@@ -432,6 +432,7 @@ public class AlbumvisController implements Initializable {
     private void slideshow(ActionEvent event) throws IOException {
 
         Stage stage1 = new Stage();
+        stage1.setTitle("Slideshow: "+albumes.get(PrincipalController.indice).getNombre());
         NiceSliderShow sliderShow = new NiceSliderShow();
     
         ArrayList<Image> imagenes = new ArrayList<>();

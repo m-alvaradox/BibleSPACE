@@ -25,6 +25,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("principal"), 640, 480);
         stage.setScene(scene);
         stage.setTitle("BIBLESPACE");
+        System.out.println("----------BIBLESPACE----------\n Elaborado por Grupo #4 - POO\n"
+                + "- Mario Alvarado\n- Austin Estrella\n- Andres Layedra");
         stage.show();
     }
  
